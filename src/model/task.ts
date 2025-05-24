@@ -1,6 +1,6 @@
-import { model, models, Schema } from "mongoose";
+import { Document, InferSchemaType, model, models, Schema } from "mongoose";
 
-enum Status {
+export enum Status {
   TODO = "TODO",
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
@@ -28,5 +28,9 @@ const taskSchema = new Schema(
     timestamps: true,
   }
 );
+
+type TaskSchemaType =  InferSchemaType<typeof taskSchema>;
+
+export interface TaskDocumentType extends Document, TaskSchemaType {};
 
 export default models.Task || model("Task", taskSchema);
